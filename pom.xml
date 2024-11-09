@@ -11,15 +11,52 @@
   <url>https://evitadb.io</url>
 
   <properties>
+    <maven.compiler.target>21</maven.compiler.target>
+    <maven.compiler.source>21</maven.compiler.source>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <antlr4.version>4.9.2</antlr4.version>
+    <junit.jupiter.version>5.10.2</junit.jupiter.version>
   </properties>
 
   <dependencies>
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
+      <groupId>org.antlr</groupId>
+      <artifactId>antlr4-runtime</artifactId>
+      <version>${antlr4.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.evitadb</groupId>
+      <artifactId>evita_query</artifactId>
+      <version>2024.11.11</version>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>${junit.jupiter.version}</version>
       <scope>test</scope>
     </dependency>
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.antlr</groupId>
+        <artifactId>antlr4-maven-plugin</artifactId>
+        <version>${antlr4.version}</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>antlr4</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <sourceDirectory>${basedir}/src/main/resources/META-INF/io/evitadb/api/query/natural/parser/</sourceDirectory>
+          <outputDirectory>${basedir}/src/main/java/io/evitadb/api/query/natural/parser/grammar/</outputDirectory>
+          <listener>false</listener>
+          <visitor>true</visitor>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
 </project>
